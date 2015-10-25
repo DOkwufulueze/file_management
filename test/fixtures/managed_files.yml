@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  managed_file_name: MyString
+  managed_file_uri: MyString
+  managed_file_mime: MyString
+  managed_file_size: 1
+  managed_file_status: 1
+  managed_file_timestamp: 1
+  managed_file_time_to_leave: 1
+  managed_file_deleted: 1
+  managed_file_parent_id: 1
+  managed_file_user_id: 1
+  managed_file_user_type: 1
+
+two:
+  managed_file_name: MyString
+  managed_file_uri: MyString
+  managed_file_mime: MyString
+  managed_file_size: 1
+  managed_file_status: 1
+  managed_file_timestamp: 1
+  managed_file_time_to_leave: 1
+  managed_file_deleted: 1
+  managed_file_parent_id: 1
+  managed_file_user_id: 1
+  managed_file_user_type: 1

@@ -1,0 +1,51 @@
+<% if notice %>
+  <p id="notice"><%= notice %></p>
+<% end %>
+
+<h1>Listing Managed Files</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Managed file name</th>
+      <th>Managed file uri</th>
+      <th>Managed file mime</th>
+      <th>Managed file size</th>
+      <th>Managed file status</th>
+      <th>Managed file timestamp</th>
+      <th>Managed file time to leave</th>
+      <th>Managed file deleted</th>
+      <th>Managed file parent</th>
+      <th>Managed file user</th>
+      <th>Managed file user type</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @managed_files.each do |managed_file| %>
+      <tr>
+        <td><%= managed_file.managed_file_name %></td>
+        <td><%= managed_file.managed_file_uri %></td>
+        <td><%= managed_file.managed_file_mime %></td>
+        <td><%= managed_file.managed_file_size %></td>
+        <td><%= managed_file.managed_file_status %></td>
+        <td><%= managed_file.managed_file_timestamp %></td>
+        <td><%= managed_file.managed_file_time_to_leave %></td>
+        <td><%= managed_file.managed_file_deleted %></td>
+        <td><%= managed_file.managed_file_parent_id %></td>
+        <td><%= managed_file.managed_file_user_id %></td>
+        <td><%= managed_file.managed_file_user_type %></td>
+        <td><%= link_to 'Show', managed_file %></td>
+        <td><%= link_to 'Models', { controller: "managed_files_usages", action: :models, id: managed_file.id }, method: :get %></td>
+        <td><%= link_to 'Edit', edit_managed_file_path(managed_file) %></td>
+        <td><%= link_to 'Destroy', managed_file, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Managed file', new_managed_file_path %>
+<%= link_to 'Show File Usage', { controller: "managed_files_usages", action: :usage }, method: :get %>

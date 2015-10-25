@@ -1,0 +1,31 @@
+<% if notice %>
+  <p id="notice"><%= notice %></p>
+<% end %>
+
+<h1>Listing Managed Files Usage</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Managed file name</th>
+      <th>Model Name</th>
+      <th>Count</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @managed_files_usage.each do |managed_file_usage| %>
+      <tr>
+        <% managed_file = ManagedFile.find(managed_file_usage.managed_file_id) %>
+        <td><%= managed_file.managed_file_name %></td>
+        <td><%= managed_file_usage.model %></td>
+        <td><%= managed_file_usage.count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Managed file', new_managed_file_path %>
+<%= link_to 'Show Managed files', managed_files_url %>

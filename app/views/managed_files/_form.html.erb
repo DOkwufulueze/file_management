@@ -1,0 +1,31 @@
+<%= form_for(@managed_file, url: managed_files_create_path, html: { method: :post, id: 'uploadForm', multipart: true, remote: true }) do |f| %>
+  <% if @managed_file.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@managed_file.errors.count, "error") %> prohibited this managed_file from being saved:</h2>
+
+      <ul>
+      <% @managed_file.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :File %><br>
+    <%= f.file_field :file_object %>
+  </div>
+  <div class="actions">
+    <%= button_tag "Upload File", type: 'button', id: "upload" %>
+    <!-- <div id="progress_bar" style="display: none;">
+      .....................................................................................................
+    </div> -->
+    <progress style="display: none;"></progress>
+    <input type="hidden" id="id" />
+  </div>
+  <div id="response" style="display:none;"> &nbsp; </div>
+<% end %>
+<div class="actions">
+  <%= button_to "Submit", { controller: controller_name, action: :write_to_usage }, method: :post, data: {confirm: ":::Do you really want to proceed?"} %>
+</div>
+
