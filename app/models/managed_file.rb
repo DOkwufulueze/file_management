@@ -14,7 +14,7 @@ class ManagedFile < ActiveRecord::Base
     self.managed_file_deleted = 0
     self.managed_file_parent_id = ((ManagedFile.last.try(:id)) || 0) + 1
     self.managed_file_user_id = 2
-    self.managed_file_user_type = 'Merchant'
+    self.managed_file_user_type = 2
   end
 
   def base_part_of file_name
