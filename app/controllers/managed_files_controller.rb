@@ -24,22 +24,25 @@ class ManagedFilesController < ApplicationController
   # POST /managed_files
   # POST /managed_files.json
   def create
+    validated = false
     @managed_file = ManagedFile.new(file_object: managed_file_params[:file_object])
+    @managed_file.save_using_block do
+      unless @managed_file.managed_file_mime == "image/jpeg"
+        redirect_with_validation_error_message ":::Invalid File."
+      else
+        validated = true
+      end
+    end
+
+    save_file if validated
+  end
+
+  def save_file
     respond_to do |format|
       if @managed_file.save
-        format.html { redirect_to managed_files_path, notice: "File successfully uploaded." }
-        # format.json { render :show, status: :created, location: @managed_file }
-        # format.json { render text: ":::File #{@managed_file} successfully uploaded." }
-        format.js {
-          session[:file_id] = @managed_file.id
-          @message = ":::File #{@managed_file.managed_file_name} successfully uploaded. Click submit below to complete upload."
-        }
+        redirect_with_save_success_message format
       else
-        format.html { render :new }
-        format.json { render json: @managed_file.errors, status: :unprocessable_entity }
-        format.js {
-          @message = ":::Unable to upload file for now."
-        }
+        redirect_with_save_error_message format
       end
     end
   end
@@ -48,7 +51,7 @@ class ManagedFilesController < ApplicationController
   # PATCH/PUT /managed_files/1.json
   def update
     respond_to do |format|
-      if @managed_file.update(managed_file_params)
+      if @managed_file.update(file_object: managed_file_params[:file_object])
         format.html { redirect_to @managed_file, notice: 'Managed file was successfully updated.' }
         format.json { render :show, status: :ok, location: @managed_file }
       else
@@ -108,6 +111,33 @@ class ManagedFilesController < ApplicationController
           end
         end
       end
+    end
+  end
+
+  def redirect_with_save_success_message format
+    format.html { redirect_to managed_files_path, notice: "File successfully uploaded." }
+    # format.json { render :show, status: :created, location: @managed_file }
+    # format.json { render text: ":::File #{@managed_file} successfully uploaded." }
+    format.js {
+      session[:file_id] = @managed_file.id
+      @message = ":::File #{@managed_file.managed_file_name} successfully uploaded. Click submit below to complete upload."
+    }
+  end
+
+  def redirect_with_save_error_message format
+    format.html { render :new }
+    format.json { render json: @managed_file.errors, status: :unprocessable_entity }
+    format.js {
+      @message = ":::Unable to upload file for now."
+    }
+  end
+
+  def redirect_with_validation_error_message message
+    respond_to do |format|
+      format.html { redirect_to managed_files_path, notice: message }
+      format.js {
+        @message = message
+      }
     end
   end
 

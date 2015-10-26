@@ -1,6 +1,5 @@
 class ManagedFile < ActiveRecord::Base
-  # validates :file_field, presence: true
-  
+    
   def file_object=(file_field)
     self.managed_file_object = file_field.read
     self.managed_file_name = base_part_of(file_field.original_filename)
@@ -20,4 +19,10 @@ class ManagedFile < ActiveRecord::Base
   def base_part_of file_name
     File.basename(file_name).gsub(/[^\w._-]/, '')
   end
+
+  def save_using_block
+    yield if block_given?
+  end
 end
+
+
