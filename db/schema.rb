@@ -14,31 +14,32 @@
 ActiveRecord::Schema.define(version: 20151024110842) do
 
   create_table "managed_files", force: :cascade do |t|
-    t.string   "managed_file_name"
-    t.string   "managed_file_uri"
-    t.string   "managed_file_mime"
-    t.integer  "managed_file_size"
-    t.integer  "managed_file_status"
-    t.integer  "managed_file_timestamp"
-    t.integer  "managed_file_time_to_leave"
-    t.integer  "managed_file_deleted"
-    t.integer  "managed_file_parent_id"
-    t.integer  "managed_file_user_id"
-    t.integer  "managed_file_user_type"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.binary   "managed_file_object"
+    t.string   "managed_file_name",          limit: 255
+    t.string   "managed_file_uri",           limit: 255
+    t.string   "managed_file_mime",          limit: 255
+    t.integer  "managed_file_size",          limit: 4
+    t.integer  "managed_file_status",        limit: 4
+    t.integer  "managed_file_timestamp",     limit: 4
+    t.integer  "managed_file_time_to_leave", limit: 4
+    t.integer  "managed_file_deleted",       limit: 4
+    t.integer  "managed_file_parent_id",     limit: 4
+    t.integer  "managed_file_user_id",       limit: 4
+    t.integer  "managed_file_user_type",     limit: 4
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.binary   "managed_file_object",        limit: 16777215
   end
 
   create_table "managed_files_usages", force: :cascade do |t|
-    t.integer  "managed_file_id"
-    t.string   "model"
-    t.integer  "model_id"
-    t.integer  "count"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.integer  "managed_file_id", limit: 4
+    t.string   "model",           limit: 255
+    t.integer  "model_id",        limit: 4
+    t.integer  "count",           limit: 4
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
-  add_index "managed_files_usages", ["managed_file_id"], name: "index_managed_files_usages_on_managed_file_id"
+  add_index "managed_files_usages", ["managed_file_id"], name: "index_managed_files_usages_on_managed_file_id", using: :btree
 
+  add_foreign_key "managed_files_usages", "managed_files"
 end
